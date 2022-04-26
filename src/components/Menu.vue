@@ -47,15 +47,15 @@
 
         <template v-if="tab === 'grimoire'">
           <!-- Grimoire -->
-          <li class="headline">Grimoire</li>
+          <li class="headline">魔典</li>
           <li @click="toggleGrimoire" v-if="players.length">
             <template v-if="!grimoire.isPublic">Hide</template>
             <template v-if="grimoire.isPublic">Show</template>
             <em>[G]</em>
           </li>
           <li @click="toggleNight" v-if="!session.isSpectator">
-            <template v-if="!grimoire.isNight">Switch to Night</template>
-            <template v-if="grimoire.isNight">Switch to Day</template>
+            <template v-if="!grimoire.isNight">切换至夜晚</template>
+            <template v-if="grimoire.isNight">切换至白天</template>
             <em>[S]</em>
           </li>
           <li @click="toggleNightOrder" v-if="players.length">
@@ -84,11 +84,11 @@
             </em>
           </li>
           <li @click="setBackground">
-            Background image
+            背景图
             <em><font-awesome-icon icon="image"/></em>
           </li>
           <li v-if="!edition.isOfficial" @click="imageOptIn">
-            <small>Show Custom Images</small>
+            <small>显示自定义图片</small>
             <em
               ><font-awesome-icon
                 :icon="[
@@ -98,14 +98,14 @@
             /></em>
           </li>
           <li @click="toggleStatic">
-            Disable Animations
+            关闭动画
             <em
               ><font-awesome-icon
                 :icon="['fas', grimoire.isStatic ? 'check-square' : 'square']"
             /></em>
           </li>
           <li @click="toggleMuted">
-            Mute Sounds
+            静音
             <em
               ><font-awesome-icon
                 :icon="['fas', grimoire.isMuted ? 'volume-mute' : 'volume-up']"
@@ -119,11 +119,11 @@
             {{ session.isSpectator ? "Playing" : "Hosting" }}
           </li>
           <li class="headline" v-else>
-            Live Session
+            联机游戏
           </li>
           <template v-if="!session.sessionId">
-            <li @click="hostSession">Host (Storyteller)<em>[H]</em></li>
-            <li @click="joinSession">Join (Player)<em>[J]</em></li>
+            <li @click="hostSession" style="font-size: 90%">创建小镇(说书人)<em>[H]</em></li>
+            <li @click="joinSession" style="font-size: 90%">加入小镇(玩家)<em>[J]</em></li>
           </template>
           <template v-else>
             <li v-if="session.ping">
@@ -153,23 +153,23 @@
 
         <template v-if="tab === 'players' && !session.isSpectator">
           <!-- Users -->
-          <li class="headline">Players</li>
-          <li @click="addPlayer" v-if="players.length < 20">Add<em>[A]</em></li>
+          <li class="headline">玩家列表</li>
+          <li @click="addPlayer" v-if="players.length < 20">添加座位<em>[A]</em></li>
           <li @click="randomizeSeatings" v-if="players.length > 2">
-            Randomize
+            随机座位
             <em><font-awesome-icon icon="dice"/></em>
           </li>
           <li @click="clearPlayers" v-if="players.length">
-            Remove all
+            移除所有玩家
             <em><font-awesome-icon icon="trash-alt"/></em>
           </li>
         </template>
 
         <template v-if="tab === 'characters'">
           <!-- Characters -->
-          <li class="headline">Characters</li>
+          <li class="headline">角色</li>
           <li v-if="!session.isSpectator" @click="toggleModal('edition')">
-            Select Edition
+            选择剧本
             <em>[E]</em>
           </li>
           <li
@@ -180,7 +180,7 @@
             <em>[C]</em>
           </li>
           <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
-            Add Fabled
+            添加传奇角色
             <em><font-awesome-icon icon="dragon"/></em>
           </li>
           <li @click="clearRoles" v-if="players.length">
@@ -191,20 +191,20 @@
 
         <template v-if="tab === 'help'">
           <!-- Help -->
-          <li class="headline">Help</li>
+          <li class="headline">帮助</li>
           <li @click="toggleModal('reference')">
-            Reference Sheet
+            角色能力表
             <em>[R]</em>
           </li>
           <li @click="toggleModal('nightOrder')">
-            Night Order Sheet
+            夜间顺序表
             <em>[N]</em>
           </li>
           <li @click="toggleModal('gameState')">
-            Game State JSON
+            游戏状态数据
             <em><font-awesome-icon icon="file-code"/></em>
           </li>
-          <li>
+          <!-- <li>
             <a href="https://discord.gg/Gd7ybwWbFk" target="_blank">
               Join Discord
             </a>
@@ -213,17 +213,17 @@
                 <font-awesome-icon :icon="['fab', 'discord']" />
               </a>
             </em>
-          </li>
-          <li>
+          </li> -->
+          <!-- <li>
             <a href="https://github.com/bra1n/townsquare" target="_blank">
-              Source code
+              游戏元am
             </a>
             <em>
               <a href="https://github.com/bra1n/townsquare" target="_blank">
                 <font-awesome-icon :icon="['fab', 'github']" />
               </a>
             </em>
-          </li>
+          </li> -->
         </template>
       </ul>
     </div>
@@ -245,7 +245,7 @@ export default {
   },
   methods: {
     setBackground() {
-      const background = prompt("Enter custom background URL");
+      const background = prompt("输入自定义背景图URL地址：");
       if (background || background === "") {
         this.$store.commit("setBackground", background);
       }
@@ -284,7 +284,7 @@ export default {
     },
     imageOptIn() {
       const popup =
-        "Are you sure you want to allow custom images? A malicious script file author might track your IP address this way.";
+        "确认要允许自定义图像吗？恶意脚本文件作者可能会通过这种方式跟踪您的IP地址。";
       if (this.grimoire.isImageOptIn || confirm(popup)) {
         this.toggleImageOptIn();
       }

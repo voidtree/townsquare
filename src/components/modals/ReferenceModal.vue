@@ -240,7 +240,6 @@ h3 {
   h4 {
     text-transform: uppercase;
     text-align: center;
-    transform: rotate(90deg);
     transform-origin: center;
     font-size: 80%;
   }
