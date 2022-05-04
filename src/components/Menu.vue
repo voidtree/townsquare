@@ -49,8 +49,8 @@
           <!-- Grimoire -->
           <li class="headline">魔典</li>
           <li @click="toggleGrimoire" v-if="players.length">
-            <template v-if="!grimoire.isPublic">Hide</template>
-            <template v-if="grimoire.isPublic">Show</template>
+            <template v-if="!grimoire.isPublic">隐藏</template>
+            <template v-if="grimoire.isPublic">显示</template>
             <em>[G]</em>
           </li>
           <li @click="toggleNight" v-if="!session.isSpectator">
@@ -59,7 +59,7 @@
             <em>[S]</em>
           </li>
           <li @click="toggleNightOrder" v-if="players.length">
-            Night order
+            显示夜晚顺序
             <em>
               <font-awesome-icon
                 :icon="[
@@ -70,7 +70,7 @@
             </em>
           </li>
           <li v-if="players.length">
-            Zoom
+            缩放
             <em>
               <font-awesome-icon
                 @click="setZoom(grimoire.zoom - 1)"
@@ -116,7 +116,7 @@
         <template v-if="tab === 'session'">
           <!-- Session -->
           <li class="headline" v-if="session.sessionId">
-            {{ session.isSpectator ? "Playing" : "Hosting" }}
+            {{ session.isSpectator ? "玩家" : "说书人" }}
           </li>
           <li class="headline" v-else>
             联机游戏
@@ -127,25 +127,25 @@
           </template>
           <template v-else>
             <li v-if="session.ping">
-              Delay to {{ session.isSpectator ? "host" : "players" }}
+              连接 {{ session.isSpectator ? "说书人" : "玩家" }}的延迟
               <em>{{ session.ping }}ms</em>
             </li>
             <li @click="copySessionUrl">
-              Copy player link
+              复制房间地址
               <em><font-awesome-icon icon="copy"/></em>
             </li>
             <li v-if="!session.isSpectator" @click="distributeRoles">
-              Send Characters
+              发送角色
               <em><font-awesome-icon icon="theater-masks"/></em>
             </li>
             <li
               v-if="session.voteHistory.length || !session.isSpectator"
               @click="toggleModal('voteHistory')"
             >
-              Vote history<em>[V]</em>
+              投票记录<em>[V]</em>
             </li>
             <li @click="leaveSession">
-              Leave Session
+              离开房间
               <em>{{ session.sessionId }}</em>
             </li>
           </template>
@@ -176,7 +176,7 @@
             @click="toggleModal('roles')"
             v-if="!session.isSpectator && players.length > 4"
           >
-            Choose & Assign
+            为玩家配置角色
             <em>[C]</em>
           </li>
           <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
@@ -184,7 +184,7 @@
             <em><font-awesome-icon icon="dragon"/></em>
           </li>
           <li @click="clearRoles" v-if="players.length">
-            Remove all
+            移除全部角色
             <em><font-awesome-icon icon="trash-alt"/></em>
           </li>
         </template>
@@ -253,7 +253,7 @@ export default {
     hostSession() {
       if (this.session.sessionId) return;
       const sessionId = prompt(
-        "Enter a channel number / name for your session",
+        "输入你的房间号码或名字，最多支持10个英文或数字字符",
         Math.round(Math.random() * 10000)
       );
       if (sessionId) {
@@ -271,7 +271,7 @@ export default {
     distributeRoles() {
       if (this.session.isSpectator) return;
       const popup =
-        "Do you want to distribute assigned characters to all SEATED players?";
+        "是否要对所有坐下的玩家发送角色？";
       if (confirm(popup)) {
         this.$store.commit("session/distributeRoles", true);
         setTimeout(
@@ -292,7 +292,7 @@ export default {
     joinSession() {
       if (this.session.sessionId) return this.leaveSession();
       let sessionId = prompt(
-        "Enter the channel number / name of the session you want to join"
+        "输入你想要加入的房间号码或名字，最多支持10个英文或数字字符"
       );
       if (sessionId.match(/^https?:\/\//i)) {
         sessionId = sessionId.split("#").pop();
@@ -305,7 +305,7 @@ export default {
       }
     },
     leaveSession() {
-      if (confirm("Are you sure you want to leave the active live game?")) {
+      if (confirm("是否离开此房间？")) {
         this.$store.commit("session/setSpectator", false);
         this.$store.commit("session/setSessionId", "");
       }
@@ -313,20 +313,20 @@ export default {
     addPlayer() {
       if (this.session.isSpectator) return;
       if (this.players.length >= 20) return;
-      const name = prompt("Player name");
+      const name = prompt("玩家名称");
       if (name) {
         this.$store.commit("players/add", name);
       }
     },
     randomizeSeatings() {
       if (this.session.isSpectator) return;
-      if (confirm("Are you sure you want to randomize seatings?")) {
+      if (confirm("你确定要随机打乱座位吗？")) {
         this.$store.dispatch("players/randomize");
       }
     },
     clearPlayers() {
       if (this.session.isSpectator) return;
-      if (confirm("Are you sure you want to remove all players?")) {
+      if (confirm("你确定要移除所有座位吗？")) {
         // abort vote if in progress
         if (this.session.nomination) {
           this.$store.commit("session/nomination");
@@ -335,7 +335,7 @@ export default {
       }
     },
     clearRoles() {
-      if (confirm("Are you sure you want to remove all player roles?")) {
+      if (confirm("你确定要移除所有角色和相关标记吗？")) {
         this.$store.dispatch("players/clearRoles");
       }
     },

@@ -11,13 +11,13 @@
       title="Show Character Reference"
     />
     <h3>
-      Night Order
+      夜间顺序
       <font-awesome-icon icon="cloud-moon" />
       {{ edition.name || "Custom Script" }}
     </h3>
     <div class="night">
       <ul class="first">
-        <li class="headline">First Night</li>
+        <li class="headline">第一夜</li>
         <li
           v-for="role in rolesFirstNight"
           :key="role.name"
@@ -56,7 +56,7 @@
         </li>
       </ul>
       <ul class="other">
-        <li class="headline">Other Nights</li>
+        <li class="headline">其他夜</li>
         <li
           v-for="role in rolesOtherNight"
           :key="role.name"
@@ -114,24 +114,23 @@ export default {
         rolesFirstNight.push(
           {
             id: "evil",
-            name: "Minion info",
+            name: "爪牙的信息",
             firstNight: 5,
             team: "minion",
             players: this.players.filter(p => p.role.team === "minion"),
             firstNightReminder:
-              "• If more than one Minion, they all make eye contact with each other. " +
-              "• Show the “This is the Demon” card. Point to the Demon."
+              "• 如果有多于一个爪牙，将他们全部唤醒，互相认识。 " +
+              "• 告知这些爪牙，谁是恶魔。"
           },
           {
             id: "evil",
-            name: "Demon info & bluffs",
+            name: "恶魔的信息",
             firstNight: 8,
             team: "demon",
             players: this.players.filter(p => p.role.team === "demon"),
             firstNightReminder:
-              "• Show the “These are your minions” card. Point to each Minion. " +
-              "• Show the “These characters are not in play” card. Show 3 character tokens of good " +
-              "characters not in play."
+              "• 唤醒恶魔，告知他哪些玩家是他的爪牙。" +
+              "• 告知恶魔三名不在场的角色。在线版本部分剧本允许自动发送不在场的角色给恶魔。"
           }
         );
       }

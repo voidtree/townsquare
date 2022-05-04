@@ -3,7 +3,7 @@
     v-if="modals.reminder && availableReminders.length && players[playerIndex]"
     @close="toggleModal('reminder')"
   >
-    <h3>Choose a reminder token:</h3>
+    <h3>选择一个备忘标记:</h3>
     <ul class="reminders">
       <li
         v-for="reminder in availableReminders"
@@ -82,9 +82,9 @@ export default {
         }
       });
 
-      reminders.push({ role: "good", name: "Good" });
-      reminders.push({ role: "evil", name: "Evil" });
-      reminders.push({ role: "custom", name: "Custom note" });
+      reminders.push({ role: "good", name: "好人" });
+      reminders.push({ role: "evil", name: "坏人" });
+      reminders.push({ role: "custom", name: "自定义笔记" });
       return reminders;
     },
     ...mapState(["modals", "grimoire"]),
@@ -95,7 +95,7 @@ export default {
       const player = this.$store.state.players.players[this.playerIndex];
       let value;
       if (reminder.role === "custom") {
-        const name = prompt("Add a custom reminder note");
+        const name = prompt("添加自定义笔记");
         if (!name) return;
         value = [...player.reminders, { role: "custom", name }];
       } else {

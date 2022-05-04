@@ -4,7 +4,7 @@
     v-if="modals.gameState"
     @close="toggleModal('gameState')"
   >
-    <h3>Current Game State</h3>
+    <h3>当前游戏状态</h3>
     <textarea
       :value="gamestate"
       @input.stop="input = $event.target.value"
@@ -13,10 +13,10 @@
     ></textarea>
     <div class="button-group">
       <div class="button townsfolk" @click="copy">
-        <font-awesome-icon icon="copy" /> Copy JSON
+        <font-awesome-icon icon="copy" /> 复制JSON
       </div>
       <div class="button demon" @click="load" v-if="!session.isSpectator">
-        <font-awesome-icon icon="cog" /> Load State
+        <font-awesome-icon icon="cog" /> 加载状态
       </div>
     </div>
   </Modal>
@@ -103,7 +103,7 @@ export default {
         }
         this.toggleModal("gameState");
       } catch (e) {
-        alert("Unable to parse JSON: " + e);
+        alert("解析JSON失败： " + e);
       }
     },
     ...mapMutations(["toggleModal"])

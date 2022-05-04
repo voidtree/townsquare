@@ -1,7 +1,7 @@
 <template>
   <Modal class="editions" v-if="modals.edition" @close="toggleModal('edition')">
     <div v-if="!isCustom">
-      <h3>Select an edition:</h3>
+      <h3>选择剧本:</h3>
       <ul class="editions">
         <li
           v-for="edition in editions"
@@ -24,29 +24,26 @@
             backgroundImage: `url(${require('../../assets/editions/custom.png')})`
           }"
         >
-          Custom Script / Characters
+          自定义剧本/角色
         </li>
       </ul>
     </div>
     <div class="custom" v-else>
-      <h3>Load custom script / characters</h3>
-      To play with a custom script, you need to select the characters you want
-      to play with in the official
+      <h3>载入自定义 剧本/角色</h3>
+      为了游玩自定义剧本，你需要在官方的
       <a href="https://script.bloodontheclocktower.com/" target="_blank"
-        >Script Tool</a
+        >脚本工具</a
       >
-      and then upload the generated "custom-list.json" either directly here or
-      provide a URL to such a hosted JSON file.<br />
+      中选择你想游玩的角色，并通过生成的文件"custom-list.json"在这里载入或提供能够载入JSON文件的URL链接。<br />
       <br />
-      To play with custom characters, please read
+      为了游玩自定义角色，请阅读关于如何编写自定义角色的 
       <a
         href="https://github.com/bra1n/townsquare#custom-characters"
         target="_blank"
-        >the documentation</a
+        >文档</a
       >
-      on how to write a custom character definition file.
-      <b>Only load custom JSON files from sources that you trust!</b>
-      <h3>Some popular custom scripts:</h3>
+      <b>请注意仅通过你信任的来源来载入自定义JSON文件！</b>
+      <h3>一些国外友人中人气较高的自定义剧本：</h3>
       <ul class="scripts">
         <li
           v-for="(script, index) in scripts"
@@ -64,13 +61,13 @@
       />
       <div class="button-group">
         <div class="button" @click="openUpload">
-          <font-awesome-icon icon="file-upload" /> Upload JSON
+          <font-awesome-icon icon="file-upload" /> 上传JSON
         </div>
         <div class="button" @click="promptURL">
-          <font-awesome-icon icon="link" /> Enter URL
+          <font-awesome-icon icon="link" /> 输入URL
         </div>
         <div class="button" @click="isCustom = false">
-          <font-awesome-icon icon="undo" /> Back
+          <font-awesome-icon icon="undo" /> 后退
         </div>
       </div>
     </div>
@@ -92,27 +89,27 @@ export default {
       isCustom: false,
       scripts: [
         [
-          "Deadly Penance Day",
+          "忏悔之日",
           "https://gist.githubusercontent.com/bra1n/0337cc44c6fd2c44f7589256ed5486d2/raw/16be38fa3c01aaf49827303ac80577bdb52c0b25/penanceday.json"
         ],
         [
-          "Catfishing 11.1",
+          "巧设骗局",
           "https://gist.githubusercontent.com/bra1n/8a5ec41a7bbf945f6b7dfc1cef72b569/raw/a312ab93c2f302e0ef83c8b65a4e8e82760fda3a/catfishing.json"
         ],
         [
-          "On Thin Ice (Teensyville)",
+          "如履薄冰（小剧本）",
           "https://gist.githubusercontent.com/bra1n/8dacd9f2abc6f428331ea1213ab153f5/raw/0cacbcaf8ed9bddae0cca25a9ada97e9958d868b/on-thin-ice.json"
         ],
         [
-          "Race To The Bottom (Teensyville)",
+          "深渊竞速（小剧本）",
           "https://gist.githubusercontent.com/bra1n/63e1354cb3dc9d4032bcd0623dc48888/raw/5acb0eedcc0a67a64a99c7e0e6271de0b7b2e1b2/race-to-the-bottom.json"
         ],
         [
-          "Frankenstein's Mayor by Ted (Teensyville)",
+          "弗兰肯斯坦市长（小剧本）",
           "https://gist.githubusercontent.com/bra1n/32c52b422cc01b934a4291eeb81dbcee/raw/5bf770693bbf7aff5e86601c82ca4af3222f4ba6/Frankensteins_Mayor_by_Ted.json"
         ],
         [
-          "Vigormortis High School (Teensyville)",
+          "死灵法师的高中学园（小剧本）",
           "https://gist.githubusercontent.com/bra1n/1f65bd4a999524719d5dabe98c3c2d27/raw/22bbec6bf56a51a7459e5ae41ed47e41971c5445/VigormortisHighSchool.json"
         ]
       ]
@@ -132,7 +129,7 @@ export default {
             const roles = JSON.parse(reader.result);
             this.parseRoles(roles);
           } catch (e) {
-            alert("Error reading custom script: " + e.message);
+            alert("读取自定义脚本失败:" + e.message);
           }
           this.$refs.upload.value = "";
         });
@@ -140,7 +137,7 @@ export default {
       }
     },
     promptURL() {
-      const url = prompt("Enter URL to a custom-script.json file");
+      const url = prompt("输入custom-script.json文件的地址");
       if (url) {
         this.handleURL(url);
       }
@@ -152,7 +149,7 @@ export default {
           const script = await res.json();
           this.parseRoles(script);
         } catch (e) {
-          alert("Error loading custom script: " + e.message);
+          alert("读取自定义脚本失败: " + e.message);
         }
       }
     },
