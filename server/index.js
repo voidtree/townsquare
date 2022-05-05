@@ -15,8 +15,8 @@ const PING_INTERVAL = 30000; // 30 seconds
 const options = {};
 
 if (process.env.NODE_ENV !== "development") {
-  options.cert = fs.readFileSync("cert.pem");
-  options.key = fs.readFileSync("key.pem");
+  options.cert = fs.readFileSync("dev.voidtree.com.pem");
+  options.key = fs.readFileSync("voidtree.key");
 }
 
 const server = https.createServer(options);
@@ -252,7 +252,7 @@ wss.on("close", function close() {
 // prod mode with stats API
 if (process.env.NODE_ENV !== "development") {
   console.log("server starting");
-  server.listen(8080);
+  server.listen(8081);
   server.on("request", (req, res) => {
     res.setHeader("Content-Type", register.contentType);
     register.metrics().then(out => res.end(out));
