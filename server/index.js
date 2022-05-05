@@ -15,8 +15,8 @@ const PING_INTERVAL = 30000; // 30 seconds
 const options = {};
 
 if (process.env.NODE_ENV !== "development") {
-  options.cert = fs.readFileSync("dev.voidtree.com.pem");
-  options.key = fs.readFileSync("voidtree.key");
+  options.cert = fs.readFileSync("7716479_clocktower.voidtree.com.pem");
+  options.key = fs.readFileSync("7716479_clocktower.voidtree.com.key");
 }
 
 const server = https.createServer(options);
