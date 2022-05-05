@@ -3,7 +3,7 @@
     <img src="static/apple-icon.png" alt="" class="logo" />
     <div>
       亲爱的玩家 欢迎使用<br />
-      血染钟楼魔典（测试版）<br />
+      血染钟楼魔典（世界树科技）<br />
       点击右上角
       <span class="button" @click="toggleMenu">
         <font-awesome-icon icon="cog" /> 菜单
