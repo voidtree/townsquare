@@ -153,7 +153,7 @@ html,
 body {
   font-size: 1.2em;
   line-height: 1.4;
-  background: url("assets/background.jpg") center center;
+  background: url("assets/background.png") center center;
   background-size: cover;
   color: white;
   height: 100%;
